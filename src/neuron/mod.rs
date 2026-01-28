@@ -1,3 +1,3 @@
 pub mod types;
 pub mod constants;
-pub use types::{Neuron};
+pub use types::{Neuron, CellType};
