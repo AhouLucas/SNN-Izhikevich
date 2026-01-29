@@ -1,7 +1,7 @@
 mod neuron;
-mod network;
+mod population;
 
-use network::Population;
+use population::Population;
 use std::fs::File;
 use std::io::Write;
 

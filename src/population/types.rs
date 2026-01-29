@@ -29,7 +29,7 @@ impl Population {
         }
 
         // Create empty adjacency matrix
-        let mut synapses = vec![Vec::new(); size];
+        let synapses = vec![Vec::new(); size];
         let spikes_buffer = vec![0.0; size];
 
         Population {
