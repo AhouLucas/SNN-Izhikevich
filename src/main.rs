@@ -1,5 +1,6 @@
 mod neuron;
 mod population;
+mod sparse;
 
 use population::Population;
 use std::fs::File;
@@ -7,14 +8,14 @@ use std::io::Write;
 
 fn main() -> std::io::Result<()> {
     // 1. Create a small population
-    let mut pop = Population::new(10, 1.);
+    let mut pop = Population::new(20, 0.9, 30., 0.5);
 
     // 2. Wire them up (Daisy Chain)
     // 0 -> 1 -> 2 -> 3
-    let strong_weight = 200.0; // Needs to be strong enough to cause a spike
-    pop.connect(0, 1, strong_weight);
-    pop.connect(1, 2, strong_weight);
-    pop.connect(2, 3, strong_weight);
+    // let strong_weight = 200.0; // Needs to be strong enough to cause a spike
+    // pop.connect(0, 1, strong_weight);
+    // pop.connect(1, 2, strong_weight);
+    // pop.connect(2, 3, strong_weight);
 
     let mut file = File::create("data/chain_test.csv")?;
     writeln!(file, "time,neuron_id")?;

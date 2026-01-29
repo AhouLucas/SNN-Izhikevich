@@ -1,3 +1,4 @@
+
 /**
  * The model of the neurons is based on Izhikevich model. He suggested that, in practice, all inhibitory neurons are modelized 
  * using Fast Spiking (FS) dynamics while excitatory are modelized using Regular Spiking (RS) dynamics
@@ -50,25 +51,36 @@ pub enum CellType {
     FS,    // Use Fast Spiking kind to represent inhibitory populations
 }
 
+impl CellType {
+    pub fn is_excitatory(&self) -> bool {
+        match self {
+            Self::RS => true,
+            Self::FS => false,
+        }
+    }
+}
+
 #[derive(Debug, Copy, Clone)]
 pub struct Neuron {
     pub id: usize,
     pub params: NeuronParams,
     pub state: NeuronState,
+    pub cell_type: CellType,
 }
 
 impl Neuron {
-    pub fn new(id: usize, params: NeuronParams) -> Self {
+    pub fn new(id: usize, params: NeuronParams, cell_type: CellType) -> Self {
         Self {
             id,
             params,
-            state: INIT_CONDITION
+            state: INIT_CONDITION,
+            cell_type,
         }
     }
 
     pub fn new_rnd(id: usize, cell_type: CellType) -> Self {
         let params = NeuronParams::get_rnd_neuron_params_per_type(cell_type);
-        Self::new(id, params)
+        Self::new(id, params, cell_type)
     }
 
     pub fn step(&mut self, input_current: f32, dt: f32) -> bool {
