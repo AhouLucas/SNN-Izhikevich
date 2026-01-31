@@ -63,24 +63,26 @@ impl CellType {
 #[derive(Debug, Copy, Clone)]
 pub struct Neuron {
     pub id: usize,
+    pub pop_id: usize,
     pub params: NeuronParams,
     pub state: NeuronState,
     pub cell_type: CellType,
 }
 
 impl Neuron {
-    pub fn new(id: usize, params: NeuronParams, cell_type: CellType) -> Self {
+    pub fn new(id: usize, pop_id: usize, params: NeuronParams, cell_type: CellType) -> Self {
         Self {
             id,
+            pop_id,
             params,
             state: INIT_CONDITION,
             cell_type,
         }
     }
 
-    pub fn new_rnd(id: usize, cell_type: CellType) -> Self {
+    pub fn new_rnd(id: usize, pop_id: usize, cell_type: CellType) -> Self {
         let params = NeuronParams::get_rnd_neuron_params_per_type(cell_type);
-        Self::new(id, params, cell_type)
+        Self::new(id, pop_id, params, cell_type)
     }
 
     pub fn step(&mut self, input_current: f32, dt: f32) -> bool {

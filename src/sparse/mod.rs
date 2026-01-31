@@ -1,2 +1,2 @@
-pub mod coo;
-pub use coo::CooMatrix;
+pub mod csr;
+pub use csr::CsrMatrix;
