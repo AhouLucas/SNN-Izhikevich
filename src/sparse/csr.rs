@@ -105,6 +105,32 @@ impl<T: Clone> CsrMatrix<T> {
             self.row_entries(row).map(move |(col, val)| (row, col, val))
         })
     }
+
+    /// Get a single element at (row, col)
+    /// Returns None if the element is zero (not stored)
+    /// Time complexity: O(k) where k is the number of non-zeros in the row
+    pub fn get(&self, row: usize, col: usize) -> Option<&T> {
+        if row >= self.nrows || col >= self.ncols {
+            return None;
+        }
+
+        let start = self.row_ptr[row];
+        let end = self.row_ptr[row + 1];
+
+        // Linear search through the row's column indices
+        for i in start..end {
+            if self.col_indices[i] == col {
+                return Some(&self.values[i]);
+            }
+        }
+
+        None // Element is zero (not stored)
+    }
+
+    /// Get a single element, returning a default value if not found
+    pub fn get_or<'a>(&'a self, row: usize, col: usize, default: &'a T) -> &'a T {
+        self.get(row, col).unwrap_or(default)
+    }
 }
 
 impl<'a, T> IntoIterator for &'a CsrMatrix<T>
